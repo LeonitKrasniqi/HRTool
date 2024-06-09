@@ -12,6 +12,7 @@ namespace HRTool.Models.Entities
         public string Telephone { get; set; }
         public string Email { get; set; }
         public int Salary { get; set; }
+        public int Age { get; set; }
 
         [JsonIgnore]
         public ICollection<Vacation> Vacations { get; set; } = new List<Vacation>();
