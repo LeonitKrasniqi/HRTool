@@ -1,4 +1,6 @@
-﻿namespace HRTool.Models.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace HRTool.Models.Entities
 {
     public class User
     {
@@ -11,6 +13,9 @@
         public string Email { get; set; }
         public int Salary { get; set; }
 
-    
+        [JsonIgnore]
+        public ICollection<Vacation> Vacations { get; set; } = new List<Vacation>();
+
+
     }
 }
