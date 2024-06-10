@@ -9,6 +9,7 @@ namespace HRTool.Mappings
         public AutoMapperProfiles()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, CreateUserDto>().ReverseMap();  
         }
     }
 }
