@@ -1,32 +1,53 @@
-﻿using HRTool.Models.Entities;
+﻿using HRTool.Data;
+using HRTool.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRTool.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task<User> CreateUserAsync(User user)
+        private readonly HRToolDbContext dbContext;
+        public UserRepository(HRToolDbContext dbContext)
         {
-            throw new NotImplementedException();
+            this.dbContext = dbContext;
+        }
+        public  async Task<User> CreateUserAsync(User user)
+        {
+            dbContext.Users.Add(user);
+            await dbContext.SaveChangesAsync();
+            return user;    
+            
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var user = await dbContext.Users.FindAsync(id);
+            if (user == null)
+            {
+                return false;
+            }
+
+            dbContext.Users.Remove(user);
+            await dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await dbContext.Users.ToListAsync();
         }
 
-        public Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Users.FirstOrDefaultAsync(x => x.UserId == id);
         }
 
-        public Task<User> UpdateAsync(User user)
+        public async Task<User> UpdateAsync(User user)
         {
-            throw new NotImplementedException();
+            dbContext.Users.Update(user);
+            await dbContext.SaveChangesAsync();
+            return user;
+           
         }
     }
 }
