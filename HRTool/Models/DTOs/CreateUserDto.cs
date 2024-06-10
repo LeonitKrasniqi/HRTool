@@ -15,11 +15,13 @@ namespace HRTool.Models.DTOs
         [Required]
         public string Telephone { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
-            
-        public int Salary { get; set; }
+        [Range(1, double.MaxValue, ErrorMessage = "Salary cannot be 0 or negative.")]
+        public double Salary { get; set; }
         [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "Age cannot be 0 or negative.")]
         public int Age { get; set; }
     }
 }
