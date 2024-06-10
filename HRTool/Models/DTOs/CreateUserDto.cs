@@ -21,7 +21,7 @@ namespace HRTool.Models.DTOs
         [Range(1, double.MaxValue, ErrorMessage = "Salary cannot be 0 or negative.")]
         public double Salary { get; set; }
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Age cannot be 0 or negative.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Age cannot be 0 or negative.")]
         public int Age { get; set; }
     }
 }
