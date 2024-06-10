@@ -1,5 +1,6 @@
 using HRTool.Data;
 using HRTool.Mappings;
+using HRTool.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<HRToolDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HRToolConnectionString")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
