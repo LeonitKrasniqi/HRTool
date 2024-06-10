@@ -33,7 +33,7 @@ namespace HRTool.Controllers
 
                 return CreatedAtAction(nameof(GetUserById), new { id = userDto.UserId }, userDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, "Cannot create a user! ");
             }
@@ -55,9 +55,73 @@ namespace HRTool.Controllers
                 var userDto = mapper.Map<UserDto>(user);
                 return Ok(userDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while fetching the user.");
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await userRepository.GetAllAsync();
+                var userDtos = mapper.Map<List<UserDto>>(users);
+                return Ok(userDtos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while fetching users.");
+            }
+        }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            try
+            {
+                var result = await userRepository.DeleteAsync(id);
+
+                if (!result)
+                {
+                    return NotFound("User not found");
+                }
+
+                return Ok("User deleted successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while deleting the user.");
+            }
+        }
+
+        [HttpPut("{id:Guid}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var existingUser = await userRepository.GetByIdAsync(id);
+                if (existingUser == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                mapper.Map(dto, existingUser);
+
+                await userRepository.UpdateAsync(existingUser);
+
+                return Ok(new { user = existingUser, message = "User updated" });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the user.");
             }
         }
     }
