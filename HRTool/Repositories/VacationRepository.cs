@@ -1,5 +1,6 @@
 ﻿using HRTool.Data;
 using HRTool.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRTool.Repositories
 {
@@ -23,9 +24,9 @@ namespace HRTool.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Vacation> GetVacationByIdAsync(Guid id)
+        public async Task<Vacation> GetVacationByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Vacations.FirstOrDefaultAsync(x => x.VacationId == id);
         }
 
         public Task<List<Vacation>> GetVacationsByUserIdAsync(Guid userId)
