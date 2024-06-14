@@ -18,6 +18,7 @@ builder.Services.AddDbContext<HRToolDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HRToolConnectionString")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVacationRepository, VacationRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
