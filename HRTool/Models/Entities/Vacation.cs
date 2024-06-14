@@ -1,4 +1,6 @@
-﻿namespace HRTool.Models.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace HRTool.Models.Entities
 {
     public class Vacation
     {
@@ -7,8 +9,7 @@
         public DateTime EndDate { get; set; }   
         public string Description {  get; set; }
         public Guid UserId { get; set; }
-        
+        [JsonIgnore]
         public User User { get; set; }  
-        public int VacationDays => (EndDate - StartDate).Days + 1;
     }
 }
