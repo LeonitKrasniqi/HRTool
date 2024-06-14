@@ -11,6 +11,7 @@ namespace HRTool.Mappings
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, CreateUserDto>().ReverseMap();  
             CreateMap<User, UpdateUserDto>().ReverseMap();  
+            CreateMap<Vacation, RequestVacationDto>().ReverseMap();
         }
     }
 }

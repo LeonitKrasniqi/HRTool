@@ -7,6 +7,7 @@ namespace HRTool.Repositories
         Task<Vacation> CreateVacationAsync(Vacation vacation);  
         Task<List<Vacation>> GetVacationsByUserIdAsync(Guid userId);
         Task<List<Vacation>> GetAllVacationsAsync();
+        Task<Vacation> GetVacationByIdAsync(Guid id);
 
     }
 }
